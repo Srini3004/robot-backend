@@ -8,7 +8,7 @@ const mapDataSchema = new Schema(
       type: Schema.Types.ObjectId,
       index: true,
     },
-    robotId: { type: String, required: true, unique: true },
+     
     mode: { type: String, required: true },
     feedback: { type: String, required: true },
     linear_velocity: {
@@ -33,6 +33,7 @@ const mapDataSchema = new Schema(
       w: { type: Number, required: true },
     },
     map_image: { type: String, required: true },
+    map_name: { type: String, required: true },
     completion_command: { type: String, required: true },
   },
   { timestamps: true }

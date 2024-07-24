@@ -1,6 +1,6 @@
 // src/Routes/robot.js
 import express from 'express';
-import { getRobots, createRobot } from '../Controllers/robotControled.js'; // Correctly import the functions
+import { getRobots, createRobot } from '../Controllers/navControled.js'; // Correctly import the functions
 
 const router = express.Router();
 
