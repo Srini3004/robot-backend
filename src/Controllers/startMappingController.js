@@ -1,5 +1,4 @@
-import MapData from "../Models/Mapping.js";
- 
+import MapData from "../Models/startMapping.js";
 
 export const startMapping = async (req, res) => {
   try {
@@ -37,6 +36,21 @@ export const saveMappingData = async (req, res) => {
       percentageCompleted,
     } = req.body;
 
+    console.log(`Request body:
+      userId: ${userId},
+      mode: ${mode},
+      feedback: ${feedback},
+      linear_velocity: ${JSON.stringify(linear_velocity)},
+      angular_velocity: ${JSON.stringify(angular_velocity)},
+      current_position: ${JSON.stringify(current_position)},
+      current_orientation: ${JSON.stringify(current_orientation)},
+      map_image: ${map_image},
+      completion_command: ${completion_command},
+      map_name: ${map_name},
+      timeTaken: ${timeTaken},
+      status: ${status},
+      percentageCompleted: ${percentageCompleted}`);
+
     if (
       !userId ||
       !mode ||
@@ -60,9 +74,7 @@ export const saveMappingData = async (req, res) => {
 
     const mapData = new MapData({
       userId,
-
       mode,
-
       feedback,
       linear_velocity,
       angular_velocity,
@@ -71,19 +83,17 @@ export const saveMappingData = async (req, res) => {
       map_image,
       completion_command,
       map_name,
-
+      timeTaken,
       status,
       percentageCompleted,
     });
 
     await mapData.save();
 
-    
-
     return res.status(201).json({
       success: true,
       message: "Mapping data saved successfully.",
-      mapId: mapData._id,
+      data: mapData,
     });
   } catch (error) {
     return res.status(500).json({
@@ -94,20 +104,29 @@ export const saveMappingData = async (req, res) => {
   }
 };
 
- 
-export const getMappingData = async (req, res) => {
+export const listMaps = async (req, res) => {
   try {
-    const { robotId } = req.params;
-
-    // Find map data by robotId
-    const mapData = await MapData.findOne({ robotId });
-
-    if (!mapData) {
-      return res.status(404).json({ message: "Map data not found for the given robot ID" });
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ error: "userId is required." });
     }
+    const maps = await MapData.find({ userId });
 
-    return res.json(mapData);
+    if (maps.length === 0) {
+      return res.json({
+        message: "No maps available. Please start mapping first.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Maps retrieved successfully.",
+      data: maps,
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while retrieving maps.",
+      error: error.message,
+    });
   }
 };
