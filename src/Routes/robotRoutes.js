@@ -13,7 +13,7 @@ router.get('/robots', verifyToken, getRobotsByEmail);
 
 //mapping api 
 router.post("/start-mapping", startMapping);
-router.post("/save-mapping-data", saveMappingData);
+router.post("/save-robot-data", saveMappingData);
  
 
 router.get('/map-data/:robotId', verifyToken, getMappingData);
