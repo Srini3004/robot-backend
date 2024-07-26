@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const mapDataSchema = new Schema(
+const startMappingDataSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -38,10 +38,9 @@ const mapDataSchema = new Schema(
     timeTaken: { type: String, required: true },
     percentageCompleted: { type: Number, required: true },
     status: { type: String, required: true },
-
   },
   { timestamps: true }
 );
 
-const MapData = mongoose.model("userRobotMapData", mapDataSchema);
-export default MapData;
+const startMappingData = mongoose.model("userstartMappingDatas", startMappingDataSchema);
+export default startMappingData;

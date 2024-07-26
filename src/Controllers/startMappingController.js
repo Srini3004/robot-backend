@@ -1,4 +1,4 @@
-import MapData from "../Models/startMapping.js";
+import StartMappingData from "../Models/startMapping.js";
 
 export const startMapping = async (req, res) => {
   try {
@@ -71,8 +71,14 @@ export const saveMappingData = async (req, res) => {
         message: "All required fields must be provided.",
       });
     }
-
-    const mapData = new MapData({
+    const existingData = await MapData.findOne({ userId, map_name  });
+    if (existingData) {
+      return res.status(400).json({
+        success: false,
+        message: "Mapping data already exists for this User and Map Name ",
+      });
+    }
+    const startMappingData = new StartMappingData({
       userId,
       mode,
       feedback,
@@ -88,12 +94,12 @@ export const saveMappingData = async (req, res) => {
       percentageCompleted,
     });
 
-    await mapData.save();
+    await startMappingData.save();
 
     return res.status(201).json({
       success: true,
       message: "Mapping data saved successfully.",
-      data: mapData,
+      data: startMappingData,
     });
   } catch (error) {
     return res.status(500).json({
@@ -110,7 +116,7 @@ export const listMaps = async (req, res) => {
     if (!userId) {
       return res.status(400).json({ error: "userId is required." });
     }
-    const maps = await MapData.find({ userId });
+    const maps = await  StartMappingData.find({ userId });
 
     if (maps.length === 0) {
       return res.json({
