@@ -35,22 +35,6 @@ export const saveMappingData = async (req, res) => {
       status,
       percentageCompleted,
     } = req.body;
-
-    console.log(`Request body:
-      userId: ${userId},
-      mode: ${mode},
-      feedback: ${feedback},
-      linear_velocity: ${JSON.stringify(linear_velocity)},
-      angular_velocity: ${JSON.stringify(angular_velocity)},
-      current_position: ${JSON.stringify(current_position)},
-      current_orientation: ${JSON.stringify(current_orientation)},
-      map_image: ${map_image},
-      completion_command: ${completion_command},
-      map_name: ${map_name},
-      timeTaken: ${timeTaken},
-      status: ${status},
-      percentageCompleted: ${percentageCompleted}`);
-
     if (
       !userId ||
       !mode ||
@@ -71,13 +55,16 @@ export const saveMappingData = async (req, res) => {
         message: "All required fields must be provided.",
       });
     }
-    const existingData = await MapData.findOne({ userId, map_name  });
+    const existingData = await StartMappingData.findOne({ userId, map_name, map_image });
+   
     if (existingData) {
       return res.status(400).json({
         success: false,
-        message: "Mapping data already exists for this User and Map Name ",
+        message:
+          "Mapping data already exists for this User and Map Name & Image.",
       });
     }
+    
     const startMappingData = new StartMappingData({
       userId,
       mode,
@@ -93,9 +80,9 @@ export const saveMappingData = async (req, res) => {
       status,
       percentageCompleted,
     });
-
+    
     await startMappingData.save();
-
+    
     return res.status(201).json({
       success: true,
       message: "Mapping data saved successfully.",
@@ -116,7 +103,7 @@ export const listMaps = async (req, res) => {
     if (!userId) {
       return res.status(400).json({ error: "userId is required." });
     }
-    const maps = await  StartMappingData.find({ userId });
+    const maps = await StartMappingData.find({ userId });
 
     if (maps.length === 0) {
       return res.json({
