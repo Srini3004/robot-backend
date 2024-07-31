@@ -55,15 +55,15 @@ export const saveMappingData = async (req, res) => {
         message: "All required fields must be provided.",
       });
     }
-    const existingData = await StartMappingData.findOne({ userId, map_name, map_image });
+    //const existingData = await StartMappingData.findOne({ userId, map_name, map_image });
    
-    if (existingData) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Mapping data already exists for this User and Map Name & Image.",
-      });
-    }
+    // if (existingData) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message:
+    //       "Mapping data already exists for this User and Map Name & Image.",
+    //   });
+    // }
     
     const startMappingData = new StartMappingData({
       userId,
