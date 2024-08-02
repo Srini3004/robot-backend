@@ -11,9 +11,20 @@ export const getUserDetails = async (req, res) => {
     }
 
     // Send user details (omit sensitive information)
+     
     const userDetails = {
-      
+      name: user.name,
       email: user.email,
+      phoneNumber: user.phoneNumber,
+      organizationName: user.organizationName,
+      otp: user.otp,
+      forgotPasswordOtp: user.forgotPasswordOtp,
+      isFirstTime: user.isFirstTime,
+      isOtpVerified: user.isOtpVerified,
+      primaryContact: user.primaryContact,
+      locations: user.locations,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
     };
     res.json(userDetails);
   } catch (error) {
@@ -21,3 +32,6 @@ export const getUserDetails = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+

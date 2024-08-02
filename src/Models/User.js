@@ -2,12 +2,35 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
+const subLocationSchema = new Schema({
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+});
+
+// Define location schema
+const locationSchema = new Schema({
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+  subLocations: [subLocationSchema],
+});
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Please provide a valid name"],
+    },
     email: {
       type: String,
-      required: [true, "please provide valid email"],
+      required: [true, "Please provide a valid email"],
       unique: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, "Please provide a valid phone number"],
+    },
+    organizationName: {
+      type: String,
+      required: [true, "Please provide a valid organization name"],
     },
     password: {
       type: String,
@@ -18,6 +41,12 @@ const userSchema = new Schema(
     forgotPasswordOtp: { type: String },
     isFirstTime: { type: Boolean, default: true },
     isOtpVerified: { type: Boolean, default: false },
+    primaryContact: {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+    },
+    locations: [locationSchema],
   },
   { timestamps: true }
 );
