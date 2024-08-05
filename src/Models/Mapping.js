@@ -2,13 +2,16 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const mapDataSchema = new Schema(
+const startMappingDataSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
       index: true,
     },
-     
+    robotId: {
+      type: String,
+      required: true,
+    },
     mode: { type: String, required: true },
     feedback: { type: String, required: true },
     linear_velocity: {
@@ -32,12 +35,21 @@ const mapDataSchema = new Schema(
       z: { type: Number, required: true },
       w: { type: Number, required: true },
     },
+
     map_image: { type: String, required: true },
+    
     map_name: { type: String, required: true },
     completion_command: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    timeTaken: { type: String, required: true },
+    percentageCompleted: { type: Number, required: true },
+    status: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-const MapData = mongoose.model("MapData", mapDataSchema);
-export default MapData;
+const startMappingData = mongoose.model(
+  "userstartMappingDatas",
+  startMappingDataSchema
+);
+export default startMappingData;

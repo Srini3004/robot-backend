@@ -2,21 +2,20 @@
 
 import { Router } from 'express';
 import { getRobotDetails, saveRobotDetails , getRobotsByEmail} from '../Controllers/robotController.js';
-import { verifyToken } from '../Middleware/authMiddleware.js'; // Assuming you have auth middleware
-import { startMapping, saveMappingData, getMappingData } from "../Controllers/mapController.js"
+import { startMapping, saveMappingData,getListMaps} from "../Controllers/mapController.js"
 
 const router = Router();
 
-router.get('/robot/:robotId', verifyToken, getRobotDetails);
+router.get('/robot/:robotId',getRobotDetails);
 router.post('/robot', saveRobotDetails);
-router.get('/robots', verifyToken, getRobotsByEmail);
+router.get('/robots',  getRobotsByEmail);
 
 //mapping api 
 router.post("/start-mapping", startMapping);
 router.post("/save-robot-data", saveMappingData);
  
+router.post("/save-mapping-data", saveMappingData);
 
-router.get('/map-data/:robotId', verifyToken, getMappingData);
- 
+router.get("/get-list-maps", getListMaps);
 
 export default router;

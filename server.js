@@ -11,7 +11,6 @@ import robotRoutes from './src/Routes/robotRoutes.js';
 import userRoutes from './src/Routes/userRoutes.js';
 import history from './src/Routes/history.js';
 import robot from './src/Routes/robot.js'
-import startMappingRoutes from "./src/Routes/startMappingRoutes.js"
 
 dotenv.config();
 
@@ -29,7 +28,7 @@ app.use('/', robotRoutes);
 app.use('/', userRoutes);
 app.use('/history', history);
 app.use('/', robot);
-app.use('/',startMappingRoutes)
+
 
 
 app.listen(PORT, async () => {
