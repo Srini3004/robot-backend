@@ -8,6 +8,16 @@ const historySchema = Schema({
   timeTaken: { type: Number, required: true },
   percentCompleted: { type: Number, required: true },
   status: { type: String, required: true },
+  linear_velocity: {
+    x: { type: Number, required: true },
+    y: { type: Number, required: true },
+    z: { type: Number, required: true },
+  },
+  angular_velocity: {
+    x: { type: Number, required: true },
+    y: { type: Number, required: true },
+    z: { type: Number, required: true },
+  },
   position: { type: Object, required: true },
   orientation: { type: Object, required: true },
 });
