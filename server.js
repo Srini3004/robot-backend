@@ -29,7 +29,7 @@ app.use('/', userRoutes);
 app.use('/history', history);
 app.use('/', robot);
 
-
+app.use('/api', robotRoutes);
 
 app.listen(PORT, async () => {
   await connectDB();
