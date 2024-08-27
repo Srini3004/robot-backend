@@ -9,7 +9,7 @@ const router = Router();
 router.get('/robot/:robotId',getRobotDetails);
 router.post('/robot', saveRobotDetails);
 router.get('/robots',  getRobotsByEmail);
-
+//jsndn
 //mapping api 
 router.post("/start-mapping", startMapping);
 router.post("/save-robot-data", saveMappingData);
